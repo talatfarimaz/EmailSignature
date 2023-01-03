@@ -200,7 +200,7 @@ const DetailsTab = () => {
         {elements.map((element, index) => {
           if (!element.sortable) {
             return (
-              <label className="flex mt-3">
+              <label className="flex mt-3" key={element.name}>
                 <div style={{ margin: "auto", width: "20px" }}></div>
                 <div style={{ width: "80%" }}>
                   <input
@@ -222,6 +222,7 @@ const DetailsTab = () => {
             return (
               <label
                 className="flex mt-3"
+                key={item.name}
                 style={{ display: item.defaultElement ? "" : "none" }}
                 onMouseOver={() => {
                   setShowIcon(true);
@@ -321,7 +322,7 @@ const DetailsTab = () => {
             >
               {elements.map((element, index) => {
                 if (!element.defaultElement) {
-                  return <option>{element.name}</option>;
+                  return <option key={element.name}>{element.name}</option>;
                 }
               })}
               <option className={"font-bold"}>Other</option>
