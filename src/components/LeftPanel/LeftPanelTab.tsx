@@ -6,6 +6,8 @@ import RecentActorsOutlinedIcon from "@material-ui/icons/RecentActorsOutlined";
 import FormatColorFillIcon from "@material-ui/icons/FormatColorFill";
 import DetailsTab from "./DetailsTab/DetailsTab";
 import SocialsTab from "./SocialsTab/SocialsTab";
+import TemplateTab from "./TemplateTab/TemplateTab";
+import DesignTab from "./DesignTab/DesignTab";
 
 const LeftPanelTab = () => {
   const [activeTab, setActiveTab] = useState<string>("details");
@@ -15,6 +17,10 @@ const LeftPanelTab = () => {
       return <DetailsTab />;
     } else if (activeTab === "social") {
       return <SocialsTab />;
+    } else if (activeTab === "template") {
+      return <TemplateTab />;
+    } else if (activeTab === "design") {
+      return <DesignTab />;
     } else {
       return <div />;
     }
