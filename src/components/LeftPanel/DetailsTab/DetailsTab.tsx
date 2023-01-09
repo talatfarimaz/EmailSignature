@@ -11,6 +11,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import { useDispatch } from "react-redux";
 
 const DetailsTab = () => {
   const [elements, setElements] = useState<DetailsModel[]>(DetailsElements);
@@ -41,6 +42,7 @@ const DetailsTab = () => {
     defaultElement: false,
   });
   const [changedFieldIndex, setChangedFieldIndex] = React.useState<number>(-1);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const defaultSelectedValueList: DetailsModel[] = elements.filter(
@@ -52,6 +54,7 @@ const DetailsTab = () => {
   }, [JSON.stringify(elements)]);
 
   useEffect(() => {
+    console.table(sortableElements);
     onChangedSortableElements();
   }, [JSON.stringify(sortableElements)]);
 
@@ -60,7 +63,13 @@ const DetailsTab = () => {
   }, []);
 
   useEffect(() => {
+    /*
     initializeSortableElements();
+*/
+    dispatch({
+      type: "ADD_DETAILS",
+      payload: elements,
+    });
   }, [JSON.stringify(elements)]);
 
   const initializeSortableElements = () => {

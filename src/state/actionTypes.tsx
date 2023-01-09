@@ -1,0 +1,6 @@
+export const SET_PAGE_TITLE = "SET_PAGE_TITLE";
+export const LEFT_MENU_OPEN_STATE = "LEFT_MENU_OPEN_STATE";
+export const NOTES_LIST_PREVIEW = "NOTES_LIST_PREVIEW";
+export const NOTES_REFRESH = "NOTES_REFRESH";
+export const ADD_DETAILS = "ADD_DETAILS";
+export const ADD_SOCIALS = "ADD_SOCIALS";

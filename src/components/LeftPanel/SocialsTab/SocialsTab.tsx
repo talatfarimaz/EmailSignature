@@ -9,6 +9,7 @@ import DeleteSweepOutlinedIcon from "@material-ui/icons/DeleteSweepOutlined";
 import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
 import RemoveOutlinedIcon from "@material-ui/icons/RemoveOutlined";
 import Tooltip from "@material-ui/core/Tooltip";
+import { useDispatch } from "react-redux";
 
 const SocialsTab = () => {
   const [elements, setElements] = useState<SocialsModel[]>([]);
@@ -16,6 +17,7 @@ const SocialsTab = () => {
   const [showIconKey, setShowIconKey] = useState<string | number>("");
   const [showMore, setShowMore] = useState<boolean>(false);
   const iconSet: SocialsModel[] = SocialsElements;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const tempElements: SocialsModel[] = [];
@@ -30,7 +32,12 @@ const SocialsTab = () => {
     setElements(tempElements);
   }, []);
 
-  useEffect(() => {}, [JSON.stringify(elements)]);
+  useEffect(() => {
+    dispatch({
+      type: "ADD_SOCIALS",
+      payload: elements,
+    });
+  }, [JSON.stringify(elements)]);
 
   const addNewSocialLink = (item: SocialsModel) => {
     const newElements: SocialsModel[] = [...elements];

@@ -10,10 +10,10 @@
         "skipLibCheck": true,
         "lib": ["dom", "dom.iterable", "esnext"],
         "allowSyntheticDefaultImports": true,
-        "moduleResolution": "node",
+        "moduleResolution": "Node",
         "resolveJsonModule": true,
         "isolatedModules": true,
-        "noEmit": true
+        "noEmit": true,
     },
     "include": ["src"]
 }
