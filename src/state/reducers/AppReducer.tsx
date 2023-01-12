@@ -7,6 +7,7 @@ const INITIAL_APP_STATE = {
   notesRefresh: false,
   detailsData: [],
   socialsData: [],
+  photoData: null,
 };
 
 export default (state = INITIAL_APP_STATE, action: any) => {
@@ -23,6 +24,8 @@ export default (state = INITIAL_APP_STATE, action: any) => {
       return { ...state, detailsData: action.payload };
     case actionTypes.ADD_SOCIALS:
       return { ...state, socialsData: action.payload };
+    case actionTypes.ADD_PHOTO:
+      return { ...state, photoData: action.payload };
     default:
       return state;
   }

@@ -1,10 +1,13 @@
 import React from "react";
 import moment from "moment";
 import { Grid } from "@material-ui/core";
+import { useSelector } from "react-redux";
 
 const StaticDataArea = () => {
   const ava1 = require("../../../assets/ava1.jpg");
   const ava2 = require("../../../assets/ava2.png");
+  // @ts-ignore
+  const photo = useSelector((state) => state.app.photoData);
 
   return (
     <div className={"text-left"}>
@@ -42,7 +45,11 @@ const StaticDataArea = () => {
       <Grid container spacing={1}>
         <Grid item xs={1}>
           <div className="avatar h-8 w-8">
-            <img className="rounded-full" src={ava2} alt="avatar" />
+            <img
+              className="rounded-full"
+              src={photo !== null && photo !== "#" ? photo : ava2}
+              alt="avatar"
+            />
             <div className="absolute right-0 h-3.5 w-3.5 rounded-full border-2 border-white bg-error dark:border-navy-700" />
           </div>
         </Grid>

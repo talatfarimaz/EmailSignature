@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grid, IconButton } from "@material-ui/core";
+import { Button, Grid, IconButton, Tooltip } from "@material-ui/core";
 import { DetailsElements } from "../../../constants/DetailsElements";
 import { DetailsModel } from "../../../models/DetailsModel";
 import { ReactSortable } from "react-sortablejs";
@@ -12,8 +12,13 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import { useDispatch } from "react-redux";
+import Cropper from "react-cropper";
+import "cropperjs/dist/cropper.css";
+import DetailsTabStyle from "../../../styles/DetailsTabStyle";
+import BackupOutlinedIcon from "@material-ui/icons/BackupOutlined";
 
 const DetailsTab = () => {
+  const classes = DetailsTabStyle();
   const [elements, setElements] = useState<DetailsModel[]>(DetailsElements);
   const [sortableElements, setSortableElements] = useState<DetailsModel[]>([]);
   const [showIcon, setShowIcon] = useState<boolean>(false);
@@ -42,7 +47,11 @@ const DetailsTab = () => {
     defaultElement: false,
   });
   const [changedFieldIndex, setChangedFieldIndex] = React.useState<number>(-1);
+  const [openEditCrop, setOpenEditCrop] = useState<boolean>(false);
   const dispatch = useDispatch();
+  const [image, setImage] = useState<string | undefined>(undefined);
+  const [cropData, setCropData] = useState("#");
+  const [cropper, setCropper] = useState<any>();
 
   useEffect(() => {
     const defaultSelectedValueList: DetailsModel[] = elements.filter(
@@ -54,7 +63,6 @@ const DetailsTab = () => {
   }, [JSON.stringify(elements)]);
 
   useEffect(() => {
-    console.table(sortableElements);
     onChangedSortableElements();
   }, [JSON.stringify(sortableElements)]);
 
@@ -64,13 +72,20 @@ const DetailsTab = () => {
 
   useEffect(() => {
     /*
-    initializeSortableElements();
-*/
+                                initializeSortableElements();
+                            */
     dispatch({
       type: "ADD_DETAILS",
       payload: elements,
     });
   }, [JSON.stringify(elements)]);
+
+  useEffect(() => {
+    dispatch({
+      type: "ADD_PHOTO",
+      payload: cropData,
+    });
+  }, [cropData]);
 
   const initializeSortableElements = () => {
     const sortableList: DetailsModel[] = [];
@@ -202,10 +217,70 @@ const DetailsTab = () => {
     }
   };
 
+  const onChange = (e: any) => {
+    e.preventDefault();
+    let files;
+    if (e.dataTransfer) {
+      files = e.dataTransfer.files;
+    } else if (e.target) {
+      files = e.target.files;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      setImage(reader.result as any);
+    };
+    reader.readAsDataURL(files[0]);
+    setOpenEditCrop(true);
+  };
+  const getCropData = () => {
+    if (typeof cropper !== "undefined") {
+      setCropData(cropper.getCroppedCanvas().toDataURL());
+      setOpenEditCrop(false);
+    }
+  };
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={9}>
         <h4 className="text-base font-semibold mt-3">SIGNATURE DETAILS</h4>
+        <div>
+          <div className="flex mt-3">
+            <div style={{ margin: "auto", width: "20px" }} />
+            <div style={{ width: "80%", height: "80px" }} className={"w-full"}>
+              <Button
+                variant="contained"
+                style={{ height: "100%", backgroundColor: "white" }}
+                color="inherit"
+                fullWidth={true}
+                size="large"
+                component="label"
+                startIcon={<BackupOutlinedIcon />}
+              >
+                Upload Image
+                <input type="file" onChange={onChange} hidden />
+              </Button>
+            </div>
+            <div style={{ width: "20%", paddingLeft: "10px" }}>
+              {cropData !== "#" && (
+                <Tooltip
+                  title={
+                    <img
+                      src={cropData}
+                      style={{ height: "100%" }}
+                      alt="cropped"
+                    />
+                  }
+                >
+                  <img
+                    src={cropData}
+                    style={{ height: "auto", borderRadius: "5px" }}
+                    alt="cropped"
+                  />
+                </Tooltip>
+              )}
+            </div>
+          </div>
+        </div>
         {elements.map((element, index) => {
           if (!element.sortable) {
             return (
@@ -488,6 +563,44 @@ const DetailsTab = () => {
               </button>
             </Grid>
           </Grid>
+        </DialogActions>
+      </Dialog>
+      <Dialog
+        open={openEditCrop}
+        onClose={() => {
+          setOpenEditCrop(false);
+        }}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        maxWidth={"md"}
+      >
+        <DialogContent style={{ padding: "unset" }}>
+          <Cropper
+            style={{ height: 400, width: "100%" }}
+            zoomTo={0.5}
+            initialAspectRatio={1}
+            preview=".img-preview"
+            src={image}
+            viewMode={1}
+            minCropBoxHeight={10}
+            minCropBoxWidth={10}
+            background={false}
+            responsive={true}
+            autoCropArea={1}
+            checkOrientation={false}
+            onInitialized={(instance) => {
+              setCropper(instance);
+            }}
+            guides={true}
+          />{" "}
+        </DialogContent>
+        <DialogActions style={{ justifyContent: "center" }}>
+          <button
+            className="btn bg-success font-medium text-white hover:bg-success-focus focus:bg-success-focus active:bg-success-focus/90"
+            onClick={getCropData}
+          >
+            Crop Image
+          </button>
         </DialogActions>
       </Dialog>
     </Grid>

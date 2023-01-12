@@ -4,3 +4,4 @@ export const NOTES_LIST_PREVIEW = "NOTES_LIST_PREVIEW";
 export const NOTES_REFRESH = "NOTES_REFRESH";
 export const ADD_DETAILS = "ADD_DETAILS";
 export const ADD_SOCIALS = "ADD_SOCIALS";
+export const ADD_PHOTO = "ADD_PHOTO";

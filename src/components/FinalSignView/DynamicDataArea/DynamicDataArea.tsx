@@ -1,12 +1,20 @@
 import React from "react";
-import { Grid } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { DetailsModel } from "../../../models/DetailsModel";
+import { SocialsModel } from "../../../models/SocialsModel";
+import { SocialIcon } from "react-social-icons";
+import AddBookModalStyle from "../../../styles/DynamicAreaStyle";
 
 const DynamicDataArea = () => {
   const ava2 = require("../../../assets/ava2.png");
   // @ts-ignore
   const test: DetailsModel[] = useSelector((state) => state.app.detailsData);
+  // @ts-ignore
+  const test2: SocialsModel[] = useSelector((state) => state.app.socialsData);
+  // @ts-ignore
+  const photo = useSelector((state) => state.app.photoData);
+  const classes = AddBookModalStyle();
 
   return (
     <div className={"text-center mt-10"}>
@@ -18,7 +26,11 @@ const DynamicDataArea = () => {
       <Grid container spacing={1}>
         <Grid item xs={1}>
           <div className="avatar h-10 w-10">
-            <img className="mask is-squircle" src={ava2} alt="avatar" />
+            <img
+              className="mask is-squircle"
+              src={photo !== null && photo !== "#" ? photo : ava2}
+              alt="avatar"
+            />
             <div className="absolute right-0 -m-0.5 h-3 w-3 rounded-full border-2 border-white bg-primary dark:border-navy-700 dark:bg-accent" />
           </div>
         </Grid>
@@ -53,12 +65,40 @@ const DynamicDataArea = () => {
                   t.value !== null &&
                   t.value !== "" && (
                     <Grid xs={4}>
-                      <h4 className="text-base text-left font-semibold text-black m-auto mt-3">
+                      <h4 className="text-base text-left font-semibold text-black m-auto mt-1">
                         {t.placeholder.toLocaleUpperCase()}
                       </h4>
-                      <h4 className="text-base text-left font-semibold text-gray-300 m-auto mb-4">
+                      <h4 className="text-base text-left font-semibold text-gray-300 m-auto mb-1">
                         {t.value}
                       </h4>
+                    </Grid>
+                  )
+                );
+              })}
+          </Grid>
+        </Grid>
+        <Grid item xs={1} />
+        <Grid item xs={11}>
+          <Grid container>
+            {test2.length !== 0 &&
+              test2.map((t) => {
+                return (
+                  t.url !== null &&
+                  t.url !== "" && (
+                    <Grid xs={3}>
+                      <Grid container className={classes.socialGrid}>
+                        <Grid item xs={2} className={classes.socialIconGrid}>
+                          <SocialIcon
+                            network={t.network}
+                            style={{ height: 15, width: 15 }}
+                          />
+                        </Grid>
+                        <Grid item xs={10} className={classes.socialUrlGrid}>
+                          <Typography className={classes.socialUrlText}>
+                            {t.url}
+                          </Typography>
+                        </Grid>
+                      </Grid>
                     </Grid>
                   )
                 );
