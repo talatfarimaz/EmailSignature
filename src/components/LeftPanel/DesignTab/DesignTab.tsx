@@ -8,11 +8,11 @@ const DesignTab = () => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
-        <h4 className="text-base font-semibold mt-3">FONT & COLOR</h4>
+        <h4 className="text-base text-white mt-3">Font & Color</h4>
         <DesignFontAndColor />
-        <h4 className="text-base font-semibold mt-8">IMAGES</h4>
+        <h4 className="text-base text-white mt-3">Images</h4>
         <DesignImages />
-        <h4 className="text-base font-semibold mt-8">DETAILS</h4>
+        <h4 className="text-base text-white mt-3">Details</h4>
         <DesignDetails />
       </Grid>
     </Grid>

@@ -10,6 +10,8 @@ const DynamicAreaStyle = makeStyles((theme) => ({
   },
   socialUrlText: {
     fontSize: 10,
+    textDecoration: "none",
+    color: "black",
   },
 }));
 

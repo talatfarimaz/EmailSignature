@@ -10,6 +10,7 @@ import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
 import RemoveOutlinedIcon from "@material-ui/icons/RemoveOutlined";
 import Tooltip from "@material-ui/core/Tooltip";
 import { useDispatch } from "react-redux";
+import SocialsTabStyle from "../../../styles/SocialsTabStyle";
 
 const SocialsTab = () => {
   const [elements, setElements] = useState<SocialsModel[]>([]);
@@ -18,6 +19,7 @@ const SocialsTab = () => {
   const [showMore, setShowMore] = useState<boolean>(false);
   const iconSet: SocialsModel[] = SocialsElements;
   const dispatch = useDispatch();
+  const classes = SocialsTabStyle();
 
   useEffect(() => {
     const tempElements: SocialsModel[] = [];
@@ -82,13 +84,14 @@ const SocialsTab = () => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
-        <h4 className="text-base font-semibold mt-3">SOCIAL PROFILES</h4>
+        <h4 className="text-base text-white mt-3">Social profiles</h4>
+
         <ReactSortable list={elements} setList={setElements}>
           {elements?.map((item, index) => {
             return (
               <label
                 key={item.id}
-                className="flex mt-3"
+                className="flex mt-3 text-white"
                 style={{ display: item.defaultIcon ? "" : "none" }}
                 onMouseOver={() => {
                   setShowIcon(true);
@@ -106,6 +109,7 @@ const SocialsTab = () => {
                   <SocialIcon
                     network={item.network}
                     style={{ height: 35, width: 35 }}
+                    fgColor={"white"}
                   />
                 </div>
                 <div style={{ width: "90%" }}>
@@ -113,8 +117,12 @@ const SocialsTab = () => {
                     onChange={(evt) => {
                       onChangeAccountUrl(evt, item.id);
                     }}
+                    value={item.url}
                     placeholder={item.network + " account url"}
-                    className="form-input w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                    className={
+                      "form-input w-full text-white rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent " +
+                      classes.inputBackground
+                    }
                   />
                 </div>
                 <div style={{ width: "10%" }} className={"flex m-auto pl-2"}>
@@ -139,7 +147,7 @@ const SocialsTab = () => {
         </ReactSortable>
         <div className="flex mt-3">
           <button
-            className="btn font-medium text-info hover:bg-info/20 focus:bg-info/20 active:bg-info/25"
+            className="btn font-medium text-white hover:bg-info/20 focus:bg-info/20 active:bg-info/25"
             onClick={() => {
               setShowMore(!showMore);
             }}
@@ -159,7 +167,7 @@ const SocialsTab = () => {
         </div>
       </Grid>
       {!showMore && (
-        <Grid item xs={12}>
+        <Grid item xs={12} className={classes.iconsBackground}>
           <Grid container spacing={2}>
             {iconSet.map((element, index) => {
               return (
@@ -174,6 +182,7 @@ const SocialsTab = () => {
                     <SocialIcon
                       network={element.network}
                       style={{ height: 30, width: 30 }}
+                      fgColor={"white"}
                     />
                   </Grid>
                 </Tooltip>

@@ -19,9 +19,9 @@ const TemplateTab = () => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
-        <h4 className="text-base font-semibold mt-3">FREE TEMPLATES</h4>
+        <h4 className="text-base text-white mt-3">Free Template</h4>
         <div style={{ height: "100px" }} />
-        <h4 className="text-base font-semibold mt-3">PRO TEMPLATES</h4>
+        <h4 className="text-base text-white mt-3">Pro Template</h4>
       </Grid>
     </Grid>
   );

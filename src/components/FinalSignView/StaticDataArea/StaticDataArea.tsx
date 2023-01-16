@@ -68,15 +68,19 @@ const StaticDataArea = () => {
           </h4>
         </Grid>
         <Grid item xs={12}>
-          <h5 className="text-base mb-3">Hey Joel,</h5>
-          <h5 className="text-base mb-1">
+          <h5 className="text-base font-semibold mb-3">Hey Joel,</h5>
+          <h5 className="text-base font-semibold mb-1">
             Here you have more information about the conference and meeting on
             the link
           </h5>
-          <a href="https://www.w3schools.com" style={{ color: "#A89FF3" }}>
+          <a
+            href="https://www.w3schools.com"
+            style={{ color: "#A89FF3" }}
+            className={"font-semibold"}
+          >
             https://www.w3schools.com
           </a>
-          <h5 className="text-base mt-3">Regards,</h5>
+          <h5 className="text-base font-semibold mt-3">Regards,</h5>
         </Grid>
       </Grid>
     </div>

@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-const DetailsTabStyle = makeStyles((theme) => ({
+const DesignTabStyle = makeStyles((theme) => ({
   cropContainer: {
     position: "absolute",
     top: 0,
@@ -31,4 +31,4 @@ const DetailsTabStyle = makeStyles((theme) => ({
   },
 }));
 
-export default DetailsTabStyle;
+export default DesignTabStyle;

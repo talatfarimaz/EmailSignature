@@ -11,7 +11,7 @@ const DesignDetails = () => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={4} style={{ margin: "auto" }}>
-        <h5 className="text-base font-light">Fill</h5>
+        <h5 className="text-white font-light">Fill</h5>
       </Grid>
       <Grid item xs={8} style={{ margin: "auto" }}>
         <div className="flex -space-x-px w-100">
@@ -43,7 +43,7 @@ const DesignDetails = () => {
       </Grid>
 
       <Grid item xs={4} style={{ margin: "auto" }}>
-        <h5 className="text-base font-light">Shape</h5>
+        <h5 className="text-white font-light">Shape</h5>
       </Grid>
       <Grid item xs={8} style={{ margin: "auto" }}>
         <div className="flex -space-x-px w-100">
@@ -62,7 +62,7 @@ const DesignDetails = () => {
         </div>
       </Grid>
       <Grid item xs={4} style={{ margin: "auto" }}>
-        <h5 className="text-base font-light">Seperator</h5>
+        <h5 className="text-white font-light">Seperator</h5>
       </Grid>
       <Grid item xs={8} style={{ margin: "auto" }}>
         <div className="flex -space-x-px w-100">
@@ -94,7 +94,7 @@ const DesignDetails = () => {
       </Grid>
 
       <Grid item xs={4} style={{ margin: "auto" }}>
-        <h5 className="text-base font-light">
+        <h5 className="text-white font-light">
           Match labels with template color
         </h5>
       </Grid>
@@ -138,7 +138,7 @@ const DesignDetails = () => {
       </Grid>
 
       <Grid item xs={4} style={{ margin: "auto" }}>
-        <h5 className="text-base font-light">Text color</h5>
+        <h5 className="text-white font-light">Text color</h5>
       </Grid>
       <Grid item xs={8} style={{ margin: "auto", textAlign: "left" }}>
         <div className="flex -space-x-px w-100">
@@ -152,7 +152,7 @@ const DesignDetails = () => {
       </Grid>
 
       <Grid item xs={4} style={{ margin: "auto" }}>
-        <h5 className="text-base font-light m-auto">Optimize for mobile</h5>
+        <h5 className="text-white font-light m-auto">Optimize for mobile</h5>
         {/*
         <RemoveRedEyeSharpIcon fontSize={"small"} color={"secondary"} />
 */}

@@ -5,9 +5,12 @@ import DefaultTheme from "./themes/DefaultTheme";
 import { Provider } from "react-redux";
 import store from "./state/store";
 import FinalSignView from "./components/FinalSignView/FinalSignView";
+import DetailsTabStyle from "./styles/DetailsTabStyle";
+import AppStyle from "./styles/AppStyle";
 
 function App() {
   const theme = DefaultTheme;
+  const classes = AppStyle();
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
@@ -19,9 +22,7 @@ function App() {
               lg={4}
               md={5}
               sm={12}
-              /*
-              style={{ backgroundColor: "#5948EA", height: "100vh" }}
-*/
+              className={classes.leftPanelMainGrid}
             >
               <LeftPanelTab />
             </Grid>

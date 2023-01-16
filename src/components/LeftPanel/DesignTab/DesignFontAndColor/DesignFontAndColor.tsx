@@ -10,7 +10,7 @@ const DesignFontAndColor = () => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={4} style={{ margin: "auto" }}>
-        <h5 className="text-base font-light">Font</h5>
+        <h5 className="text-white font-light">Font</h5>
       </Grid>
       <Grid item xs={8} style={{ margin: "auto" }}>
         <label className="block">
@@ -30,7 +30,7 @@ const DesignFontAndColor = () => {
         </label>
       </Grid>
       <Grid item xs={4} style={{ margin: "auto" }}>
-        <h5 className="text-base font-light">Font size</h5>
+        <h5 className="text-white font-light">Font size</h5>
       </Grid>
       <Grid item xs={8} style={{ margin: "auto" }}>
         <label className="block">
@@ -38,7 +38,7 @@ const DesignFontAndColor = () => {
         </label>
       </Grid>
       <Grid item xs={4} style={{ margin: "auto" }}>
-        <h5 className="text-base font-light">Line spacing</h5>
+        <h5 className="text-white font-light">Line spacing</h5>
       </Grid>
       <Grid item xs={8} style={{ margin: "auto" }}>
         <div className="flex -space-x-px w-100">
@@ -63,7 +63,7 @@ const DesignFontAndColor = () => {
         </div>
       </Grid>
       <Grid item xs={4} style={{ margin: "auto" }}>
-        <h5 className="text-base font-light">Space from content</h5>
+        <h5 className="text-white font-light">Space from content</h5>
       </Grid>
       <Grid item xs={8} style={{ margin: "auto" }}>
         <div className="flex -space-x-px w-100">
@@ -89,7 +89,7 @@ const DesignFontAndColor = () => {
       </Grid>
 
       <Grid item xs={4} style={{ margin: "auto" }}>
-        <h5 className="text-base font-light">Template Color</h5>
+        <h5 className="text-white font-light">Template Color</h5>
       </Grid>
       <Grid item xs={8} style={{ margin: "auto", textAlign: "center" }}>
         <button

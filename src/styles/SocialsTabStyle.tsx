@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-const DetailsTabStyle = makeStyles((theme) => ({
+const SocialsTabStyle = makeStyles((theme) => ({
   cropContainer: {
     position: "absolute",
     top: 0,
@@ -29,6 +29,11 @@ const DetailsTabStyle = makeStyles((theme) => ({
       fontWeight: "bold",
     },
   },
+  iconsBackground: {
+    backgroundColor: "#7264EE",
+    borderRadius: "5px",
+    marginRight: "5px",
+  },
 }));
 
-export default DetailsTabStyle;
+export default SocialsTabStyle;

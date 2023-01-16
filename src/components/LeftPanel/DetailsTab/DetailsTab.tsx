@@ -11,7 +11,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import DetailsTabStyle from "../../../styles/DetailsTabStyle";
@@ -52,6 +52,8 @@ const DetailsTab = () => {
   const [image, setImage] = useState<string | undefined>(undefined);
   const [cropData, setCropData] = useState("#");
   const [cropper, setCropper] = useState<any>();
+  // @ts-ignore
+  const photo = useSelector((state) => state.app.photoData);
 
   useEffect(() => {
     const defaultSelectedValueList: DetailsModel[] = elements.filter(
@@ -72,8 +74,8 @@ const DetailsTab = () => {
 
   useEffect(() => {
     /*
-                                initializeSortableElements();
-                            */
+                                            initializeSortableElements();
+                                        */
     dispatch({
       type: "ADD_DETAILS",
       payload: elements,
@@ -83,9 +85,9 @@ const DetailsTab = () => {
   useEffect(() => {
     dispatch({
       type: "ADD_PHOTO",
-      payload: cropData,
+      payload: photo,
     });
-  }, [cropData]);
+  }, [photo]);
 
   const initializeSortableElements = () => {
     const sortableList: DetailsModel[] = [];
@@ -98,6 +100,10 @@ const DetailsTab = () => {
 
   const onChangedSortableElements = () => {
     setElements(elements.slice(0, 3).concat(sortableElements));
+    dispatch({
+      type: "ADD_DETAILS",
+      payload: elements,
+    });
   };
 
   const onChangeHandler = (
@@ -140,6 +146,7 @@ const DetailsTab = () => {
   const deleteElement = (index: number) => {
     const newSortableElements = [...sortableElements];
     newSortableElements[index].defaultElement = false;
+    newSortableElements[index].value = "";
     setSortableElements(newSortableElements);
   };
 
@@ -234,6 +241,10 @@ const DetailsTab = () => {
   };
   const getCropData = () => {
     if (typeof cropper !== "undefined") {
+      dispatch({
+        type: "ADD_PHOTO",
+        payload: cropper.getCroppedCanvas().toDataURL(),
+      });
       setCropData(cropper.getCroppedCanvas().toDataURL());
       setOpenEditCrop(false);
     }
@@ -242,15 +253,27 @@ const DetailsTab = () => {
   return (
     <Grid container spacing={2}>
       <Grid item xs={9}>
-        <h4 className="text-base font-semibold mt-3">SIGNATURE DETAILS</h4>
+        <div>
+          <div className="flex">
+            <div style={{ margin: "auto", width: "20px" }} />
+            <div style={{ width: "80%" }} className={"w-full"}>
+              <h4 className="text-base text-white mt-3">Signature details</h4>
+            </div>
+            <div style={{ width: "20%" }} />
+          </div>
+        </div>
         <div>
           <div className="flex mt-3">
             <div style={{ margin: "auto", width: "20px" }} />
             <div style={{ width: "80%", height: "80px" }} className={"w-full"}>
               <Button
                 variant="contained"
-                style={{ height: "100%", backgroundColor: "white" }}
-                color="inherit"
+                style={{
+                  height: "100%",
+                  backgroundColor: "#7264EE",
+                  color: "white",
+                  borderRadius: "1.0rem",
+                }}
                 fullWidth={true}
                 size="large"
                 component="label"
@@ -261,18 +284,14 @@ const DetailsTab = () => {
               </Button>
             </div>
             <div style={{ width: "20%", paddingLeft: "10px" }}>
-              {cropData !== "#" && (
+              {photo !== null && (
                 <Tooltip
                   title={
-                    <img
-                      src={cropData}
-                      style={{ height: "100%" }}
-                      alt="cropped"
-                    />
+                    <img src={photo} style={{ height: "100%" }} alt="cropped" />
                   }
                 >
                   <img
-                    src={cropData}
+                    src={photo}
                     style={{ height: "auto", borderRadius: "5px" }}
                     alt="cropped"
                   />
@@ -284,11 +303,14 @@ const DetailsTab = () => {
         {elements.map((element, index) => {
           if (!element.sortable) {
             return (
-              <label className="flex mt-3">
+              <label className="flex mt-3 text-white">
                 <div style={{ margin: "auto", width: "20px" }} />
                 <div style={{ width: "80%" }}>
                   <input
-                    className="form-input w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                    className={
+                      "form-input w-full text-white rounded-xl border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent " +
+                      classes.inputBackground
+                    }
                     placeholder={element.placeholder}
                     type={element.type}
                     value={element.value}
@@ -305,7 +327,7 @@ const DetailsTab = () => {
           {sortableElements.map((item, index) => {
             return (
               <label
-                className="flex mt-3"
+                className="flex mt-3 text-white"
                 style={{ display: item.defaultElement ? "" : "none" }}
                 onMouseOver={() => {
                   setShowIcon(true);
@@ -321,7 +343,10 @@ const DetailsTab = () => {
                 </div>
                 <div style={{ width: "80%" }}>
                   <input
-                    className="form-input w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                    className={
+                      "form-input w-full text-white rounded-lg border border-slate-300 px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent " +
+                      classes.inputBackground
+                    }
                     placeholder={item.placeholder}
                     type={item.type}
                     value={item.value}
@@ -370,7 +395,7 @@ const DetailsTab = () => {
         </ReactSortable>
         <div className="flex mt-3">
           <button
-            className="btn font-medium text-info hover:bg-info/20 focus:bg-info/20 active:bg-info/25"
+            className="btn font-medium text-white hover:bg-info/20 focus:bg-info/20 active:bg-info/25"
             onClick={handleClickOpen}
           >
             <AddOutlinedIcon fontSize={"small"} />

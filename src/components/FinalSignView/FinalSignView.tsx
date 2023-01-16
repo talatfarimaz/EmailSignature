@@ -1,5 +1,5 @@
 import React from "react";
-import "../../styles/LeftPanelStyle.css";
+import "../../styles/LeftPanelStyle";
 import StaticDataArea from "./StaticDataArea/StaticDataArea";
 import DynamicDataArea from "./DynamicDataArea/DynamicDataArea";
 
