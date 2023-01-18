@@ -11,6 +11,7 @@ import ImageIcon from "@material-ui/icons/Image";
 import DeleteIcon from "@material-ui/icons/Delete";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import SendIcon from "@material-ui/icons/Send";
+import { ImageShapeType } from "../../../constants/ImageShapeType";
 
 const DynamicDataArea = () => {
   const ava2 = require("../../../assets/ava2.png");
@@ -20,7 +21,31 @@ const DynamicDataArea = () => {
   const test2: SocialsModel[] = useSelector((state) => state.app.socialsData);
   // @ts-ignore
   const photo = useSelector((state) => state.app.photoData);
+  // @ts-ignore
+  const fontSizePer = useSelector((state) => state.app.fontSizePer);
+  // @ts-ignore
+  const lineSpacing = useSelector((state) => state.app.lineSpacing);
+  // @ts-ignore
+  const spaceFromContent = useSelector((state) => state.app.spaceFromContent);
+  // @ts-ignore
+  const colorValue = useSelector((state) => state.app.colorValue);
+  // @ts-ignore
+  const imageShape = useSelector((state) => state.app.imageShape);
+
+  // @ts-ignore
+  const imageSize = useSelector((state) => state.app.imageSize);
+
   const classes = AddBookModalStyle();
+
+  const getImageRadius = () => {
+    if (imageShape === ImageShapeType.ELLIPSE) {
+      return "30%";
+    } else if (imageShape === ImageShapeType.CIRCLE) {
+      return "50%";
+    } else {
+      return "0%";
+    }
+  };
 
   return (
     <div className={"text-center mt-10"}>
@@ -28,28 +53,73 @@ const DynamicDataArea = () => {
         YOUR DESIGN TEMPLATE
       </h4>
       <div className="my-4 h-px  bg-slate-200 dark:bg-navy-500" />
-      <Grid container spacing={1}>
+      <Grid
+        container
+        spacing={lineSpacing}
+        style={{
+          marginTop: spaceFromContent + "px",
+        }}
+      >
         <Grid item xs={1}>
-          <div className="avatar h-10 w-10">
+          <div
+            className="avatar"
+            style={{
+              height: imageSize * 4 + "px",
+              width: imageSize * 4 + "px",
+            }}
+          >
             <img
-              className="mask is-squircle"
+              style={{
+                borderRadius: getImageRadius(),
+              }}
+              className="mask"
               src={photo !== null && photo !== "#" ? photo : ava2}
               alt="avatar"
             />
             <div className="absolute right-0 -m-0.5 h-3 w-3 rounded-full border-2 border-white bg-primary dark:border-navy-700 dark:bg-accent" />
           </div>
         </Grid>
-        <Grid item xs={7} alignContent={"flex-start"} alignItems={"flex-start"}>
+        <Grid
+          item
+          xs={7}
+          alignContent={"flex-start"}
+          alignItems={"flex-start"}
+          style={{
+            paddingLeft: imageSize * 3 - 25 + "px",
+          }}
+        >
           {test.length !== 0 && (
             <>
-              <h4 className="text-base text-left font-semibold text-black m-auto">
+              <Typography
+                style={{
+                  lineHeight: "1.5rem",
+                  fontWeight: "600",
+                  fontSize: fontSizePer + "px",
+                }}
+                className="text-base text-left font-semibold text-black m-auto"
+              >
                 {test[0]?.value !== "" ? test[0].value : ""}
-              </h4>
+              </Typography>
               <div style={{ display: "flex" }}>
-                <h4 className="text-base text-left font-semibold text-gray-400 ">
+                <Typography
+                  style={{
+                    lineHeight: "1.5rem",
+                    fontWeight: "600",
+                    fontSize: fontSizePer + "px",
+                  }}
+                  className="text-base text-left font-semibold text-gray-400 "
+                >
                   {test[1]?.value !== "" ? test[1].value : ""}
-                </h4>
-                <h4 className="text-base text-left font-bold ml-4 text-black ">
+                </Typography>
+                <Typography
+                  style={{
+                    lineHeight: "1.5rem",
+                    fontWeight: "bold",
+                    fontSize: fontSizePer + "px",
+                    marginLeft: "4px",
+                  }}
+                  className="text-base text-left font-bold ml-4 text-black "
+                >
                   {test[2]?.value !== "" && (
                     <FiberManualRecordIcon
                       style={{
@@ -61,7 +131,7 @@ const DynamicDataArea = () => {
                     />
                   )}
                   {test[2]?.value !== "" ? test[2].value : ""}
-                </h4>
+                </Typography>
               </div>
             </>
           )}
@@ -82,12 +152,27 @@ const DynamicDataArea = () => {
                   t.value !== null &&
                   t.value !== "" && (
                     <Grid xs={4}>
-                      <h4 className="text-base text-left font-semibold text-black m-auto mt-1">
-                        {t.placeholder.toLocaleUpperCase()}
-                      </h4>
-                      <h4 className="text-base text-left font-semibold text-gray-300 m-auto mb-1">
+                      <Typography
+                        style={{
+                          lineHeight: "1.5rem",
+                          fontWeight: "600",
+                          color: colorValue,
+                          fontSize: fontSizePer + "px",
+                        }}
+                        className="text-base text-left font-semibold m-auto mt-1"
+                      >
+                        {t.placeholder}
+                      </Typography>
+                      <Typography
+                        className="text-base text-left font-bold text-gray-700 m-auto mb-1"
+                        style={{
+                          fontSize: fontSizePer - 3 + "px",
+                          lineHeight: "1.5rem",
+                          fontWeight: "bold",
+                        }}
+                      >
                         {t.value}
-                      </h4>
+                      </Typography>
                     </Grid>
                   )
                 );

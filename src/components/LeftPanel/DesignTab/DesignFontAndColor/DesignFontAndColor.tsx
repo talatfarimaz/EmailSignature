@@ -1,11 +1,61 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Grid } from "@material-ui/core";
 import OpacityOutlinedIcon from "@material-ui/icons/OpacityOutlined";
 import { HexColorPicker } from "react-colorful";
+import { useDispatch } from "react-redux";
+import { CHANGE_LINE_SPACING_DETAIL } from "../../../../state/actionTypes";
 
 const DesignFontAndColor = () => {
   const [openColorPicker, setOpenColorPicker] = React.useState<boolean>(false);
   const [color, setColor] = React.useState("#aabbcc");
+  const [space, setSpace] = React.useState<number>(1);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({
+      type: "CHANGE_SPACE_FROM_CONTENT_DETAIL",
+      payload: space * 20,
+    });
+  }, [space]);
+
+  useEffect(() => {
+    dispatch({
+      type: "CHANGE_COLOR_DETAIL",
+      payload: color,
+    });
+  }, [color]);
+
+  const onChangeFontRange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch({
+      type: "CHANGE_FONT_SIZE_DETAIL",
+      payload: evt.target.value,
+    });
+  };
+
+  const onChangeLineSpacing = (num: number) => {
+    dispatch({
+      type: "CHANGE_LINE_SPACING_DETAIL",
+      payload: num,
+    });
+  };
+
+  const onChangeColor = (color: string) => {
+    dispatch({
+      type: "CHANGE_COLOR_DETAIL",
+      payload: color,
+    });
+  };
+
+  const upSpace = () => {
+    if (space < 6) {
+      setSpace(space + 1);
+    }
+  };
+
+  const downSpace = () => {
+    if (space > 1) {
+      setSpace(space - 1);
+    }
+  };
 
   return (
     <Grid container spacing={2}>
@@ -34,7 +84,13 @@ const DesignFontAndColor = () => {
       </Grid>
       <Grid item xs={8} style={{ margin: "auto" }}>
         <label className="block">
-          <input className="form-range text-error" type="range" />
+          <input
+            className="form-range text-error"
+            min={11}
+            max={21}
+            type="range"
+            onChange={onChangeFontRange}
+          />
         </label>
       </Grid>
       <Grid item xs={4} style={{ margin: "auto" }}>
@@ -44,18 +100,21 @@ const DesignFontAndColor = () => {
         <div className="flex -space-x-px w-100">
           <button
             style={{ width: "33%" }}
+            onClick={() => onChangeLineSpacing(1)}
             className="btn rounded-r-none border border-info font-medium text-info hover:bg-info hover:text-white focus:bg-info focus:text-white active:bg-info/90"
           >
             0.5
           </button>
           <button
             style={{ width: "34%" }}
+            onClick={() => onChangeLineSpacing(2)}
             className="btn rounded-none border border-info font-medium text-info hover:bg-info hover:text-white focus:bg-info focus:text-white active:bg-info/90"
           >
             1.0
           </button>
           <button
             style={{ width: "33%" }}
+            onClick={() => onChangeLineSpacing(4)}
             className="btn rounded-l-none border border-info font-medium text-info hover:bg-info hover:text-white focus:bg-info focus:text-white active:bg-info/90"
           >
             2.0
@@ -69,6 +128,8 @@ const DesignFontAndColor = () => {
         <div className="flex -space-x-px w-100">
           <button
             style={{ width: "33%" }}
+            onClick={downSpace}
+            disabled={space == 1}
             className="btn rounded-r-none bg-success/10 font-medium text-success hover:bg-success/20 focus:bg-success/20 active:bg-success/25"
           >
             -
@@ -77,10 +138,12 @@ const DesignFontAndColor = () => {
             style={{ width: "34%" }}
             className="btn rounded-none bg-success/10 font-medium text-success hover:bg-success/20 focus:bg-success/20 active:bg-success/25"
           >
-            1
+            {space}
           </button>
           <button
             style={{ width: "33%" }}
+            disabled={space == 5}
+            onClick={upSpace}
             className="btn rounded-l-none bg-success/10 font-medium text-success hover:bg-success/20 focus:bg-success/20 active:bg-success/25"
           >
             +
@@ -94,30 +157,51 @@ const DesignFontAndColor = () => {
       <Grid item xs={8} style={{ margin: "auto", textAlign: "center" }}>
         <button
           style={{ backgroundColor: "#191C2B" }}
+          onClick={() => {
+            onChangeColor("#191C2B");
+          }}
           className="btn m-1 h-6 w-6 rounded-full bg-info/10 p-0 font-medium text-info hover:bg-info/20 focus:bg-info/20 active:bg-info/25"
         />
         <button
           style={{ backgroundColor: "#48A1E5" }}
+          onClick={() => {
+            onChangeColor("#48A1E5");
+          }}
           className="btn m-1 h-6 w-6 rounded-full bg-info/10 p-0 font-medium text-info hover:bg-info/20 focus:bg-info/20 active:bg-info/25"
         />
         <button
           style={{ backgroundColor: "#6EB435" }}
+          onClick={() => {
+            onChangeColor("#6EB435");
+          }}
           className="btn m-1 h-6 w-6 rounded-full bg-info/10 p-0 font-medium text-info hover:bg-info/20 focus:bg-info/20 active:bg-info/25"
         />
         <button
           style={{ backgroundColor: "#B4BA41" }}
+          onClick={() => {
+            onChangeColor("#B4BA41");
+          }}
           className="btn m-1 h-6 w-6 rounded-full bg-info/10 p-0 font-medium text-info hover:bg-info/20 focus:bg-info/20 active:bg-info/25"
         />
         <button
           style={{ backgroundColor: "#EE6A2F" }}
+          onClick={() => {
+            onChangeColor("#EE6A2F");
+          }}
           className="btn m-1 h-6 w-6 rounded-full bg-info/10 p-0 font-medium text-info hover:bg-info/20 focus:bg-info/20 active:bg-info/25"
         />
         <button
           style={{ backgroundColor: "#AB332C" }}
+          onClick={() => {
+            onChangeColor("#AB332C");
+          }}
           className="btn m-1 h-6 w-6 rounded-full bg-info/10 p-0 font-medium text-info hover:bg-info/20 focus:bg-info/20 active:bg-info/25"
         />
         <button
           style={{ backgroundColor: "#45668E" }}
+          onClick={() => {
+            onChangeColor("#45668E");
+          }}
           className="btn m-1 h-6 w-6 rounded-full bg-info/10 p-0 font-medium text-info hover:bg-info/20 focus:bg-info/20 active:bg-info/25"
         />
         <button

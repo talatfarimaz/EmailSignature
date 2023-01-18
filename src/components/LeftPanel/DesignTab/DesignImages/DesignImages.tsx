@@ -7,9 +7,35 @@ import VerticalAlignTopOutlinedIcon from "@material-ui/icons/VerticalAlignTopOut
 import VerticalAlignBottomOutlinedIcon from "@material-ui/icons/VerticalAlignBottomOutlined";
 import VerticalAlignCenterOutlinedIcon from "@material-ui/icons/VerticalAlignCenterOutlined";
 import DesignTabStyle from "../../../../styles/DesignTabStyle";
+import { useDispatch } from "react-redux";
+import { ImageShapeType } from "../../../../constants/ImageShapeType";
+import { ImageLocationType } from "../../../../constants/ImageLocationType";
 
 const DesignImages = () => {
   const classes = DesignTabStyle();
+  const dispatch = useDispatch();
+
+  const onChangeImageShape = (shape: number) => {
+    dispatch({
+      type: "CHANGE_IMAGE_SHAPE",
+      payload: shape,
+    });
+  };
+
+  const onChangeImageSize = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch({
+      type: "CHANGE_IMAGE_SIZE",
+      payload: evt.target.value,
+    });
+  };
+
+  const onChangeImageLocation = (location: number) => {
+    dispatch({
+      type: "CHANGE_IMAGE_LOCATION",
+      payload: location,
+    });
+  };
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={4} style={{ margin: "auto" }}>
@@ -19,18 +45,27 @@ const DesignImages = () => {
         <div className="flex -space-x-px w-100">
           <button
             style={{ width: "33%" }}
+            onClick={() => {
+              onChangeImageShape(ImageShapeType.ELLIPSE);
+            }}
             className="btn rounded-r-none border border-info font-medium text-info hover:bg-info hover:text-white focus:bg-info focus:text-white active:bg-info/90"
           >
             <CropDinOutlinedIcon fontSize={"small"} />
           </button>
           <button
             style={{ width: "34%" }}
+            onClick={() => {
+              onChangeImageShape(ImageShapeType.SQUARE);
+            }}
             className="btn rounded-none border border-info font-medium text-info hover:bg-info hover:text-white focus:bg-info focus:text-white active:bg-info/90"
           >
             <CheckBoxOutlineBlankSharpIcon fontSize={"small"} />
           </button>
           <button
             style={{ width: "33%" }}
+            onClick={() => {
+              onChangeImageShape(ImageShapeType.CIRCLE);
+            }}
             className="btn rounded-l-none border border-info font-medium text-info hover:bg-info hover:text-white focus:bg-info focus:text-white active:bg-info/90"
           >
             <RadioButtonUncheckedOutlinedIcon fontSize={"small"} />
@@ -43,7 +78,13 @@ const DesignImages = () => {
       </Grid>
       <Grid item xs={8} style={{ margin: "auto" }}>
         <label className="block">
-          <input className="form-range text-error" type="range" />
+          <input
+            className="form-range text-error"
+            min={11}
+            max={21}
+            onChange={onChangeImageSize}
+            type="range"
+          />
         </label>
       </Grid>
 
@@ -54,18 +95,27 @@ const DesignImages = () => {
         <div className="flex -space-x-px w-100">
           <button
             style={{ width: "33%" }}
+            onClick={() => {
+              onChangeImageLocation(ImageLocationType.UP);
+            }}
             className="btn rounded-r-none border border-info font-medium text-info hover:bg-info hover:text-white focus:bg-info focus:text-white active:bg-info/90"
           >
             <VerticalAlignTopOutlinedIcon fontSize={"small"} />
           </button>
           <button
             style={{ width: "34%" }}
+            onClick={() => {
+              onChangeImageLocation(ImageLocationType.CENTER);
+            }}
             className="btn rounded-none border border-info font-medium text-info hover:bg-info hover:text-white focus:bg-info focus:text-white active:bg-info/90"
           >
             <VerticalAlignCenterOutlinedIcon fontSize={"small"} />
           </button>
           <button
             style={{ width: "33%" }}
+            onClick={() => {
+              onChangeImageLocation(ImageLocationType.DOWN);
+            }}
             className="btn rounded-l-none border border-info font-medium text-info hover:bg-info hover:text-white focus:bg-info focus:text-white active:bg-info/90"
           >
             <VerticalAlignBottomOutlinedIcon fontSize={"small"} />

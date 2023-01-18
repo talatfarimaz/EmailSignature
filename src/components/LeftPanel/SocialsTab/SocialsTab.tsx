@@ -9,7 +9,7 @@ import DeleteSweepOutlinedIcon from "@material-ui/icons/DeleteSweepOutlined";
 import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
 import RemoveOutlinedIcon from "@material-ui/icons/RemoveOutlined";
 import Tooltip from "@material-ui/core/Tooltip";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import SocialsTabStyle from "../../../styles/SocialsTabStyle";
 
 const SocialsTab = () => {

@@ -1,4 +1,7 @@
 import * as actionTypes from "../actionTypes";
+import { ImageShapeType } from "../../constants/ImageShapeType";
+import { CHANGE_IMAGE_LOCATION, CHANGE_IMAGE_SIZE } from "../actionTypes";
+import { ImageLocationType } from "../../constants/ImageLocationType";
 
 const INITIAL_APP_STATE = {
   title: "First Screen",
@@ -8,6 +11,13 @@ const INITIAL_APP_STATE = {
   detailsData: [],
   socialsData: [],
   photoData: null,
+  fontSizePer: 16,
+  lineSpacing: 2,
+  spaceFromContent: 1,
+  colorValue: "#9ca3af",
+  imageShape: ImageShapeType.SQUARE,
+  imageSize: 10,
+  imageLocation: ImageLocationType.UP,
 };
 
 export default (state = INITIAL_APP_STATE, action: any) => {
@@ -26,6 +36,21 @@ export default (state = INITIAL_APP_STATE, action: any) => {
       return { ...state, socialsData: action.payload };
     case actionTypes.ADD_PHOTO:
       return { ...state, photoData: action.payload };
+    case actionTypes.CHANGE_FONT_SIZE_DETAIL:
+      return { ...state, fontSizePer: action.payload };
+    case actionTypes.CHANGE_LINE_SPACING_DETAIL:
+      return { ...state, lineSpacing: action.payload };
+    case actionTypes.CHANGE_SPACE_FROM_CONTENT_DETAIL:
+      return { ...state, spaceFromContent: action.payload };
+    case actionTypes.CHANGE_COLOR_DETAIL:
+      return { ...state, colorValue: action.payload };
+    case actionTypes.CHANGE_IMAGE_SHAPE:
+      return { ...state, imageShape: action.payload };
+    case actionTypes.CHANGE_IMAGE_SIZE:
+      return { ...state, imageSize: action.payload };
+    case actionTypes.CHANGE_IMAGE_LOCATION:
+      return { ...state, imageLocation: action.payload };
+
     default:
       return state;
   }
