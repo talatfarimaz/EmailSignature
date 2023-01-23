@@ -1,13 +1,64 @@
-import React from "react";
-import { Grid } from "@material-ui/core";
+import React, { ReactNode } from "react";
+import { Grid, IconButton, Typography } from "@material-ui/core";
 import CallOutlinedIcon from "@material-ui/icons/CallOutlined";
 import SystemUpdateAltOutlinedIcon from "@material-ui/icons/SystemUpdateAltOutlined";
 import InputIcon from "@material-ui/icons/Input";
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import StopIcon from "@material-ui/icons/Stop";
-import RemoveRedEyeSharpIcon from "@material-ui/icons/RemoveRedEyeSharp";
+import { useDispatch, useSelector } from "react-redux";
+import { IconFillType } from "../../../../constants/IconFillType";
+import { DetailsModel } from "../../../../models/DetailsModel";
+import Button from "@material-ui/core/Button";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+
+import Menu from "@material-ui/core/Menu";
+import DesignTabStyle from "../../../../styles/DesignTabStyle";
+import { IconElements } from "../../../../constants/IconElements";
 
 const DesignDetails = () => {
+  const dispatch = useDispatch();
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [selectedIcon, setSelectedIcon] = React.useState<string>("");
+
+  const classes = DesignTabStyle();
+
+  const handleClick = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    selectedIcon: string
+  ) => {
+    setSelectedIcon(selectedIcon);
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  // @ts-ignore
+  const details: DetailsModel[] = useSelector((state) => state.app.detailsData);
+
+  const onChangeTextFillType = (type: number) => {
+    dispatch({
+      type: "CHANGE_FILL_TYPE",
+      payload: type,
+    });
+  };
+
+  const onChangeIcon = (icon: ReactNode) => {
+    const changedIcon = details.filter(
+      (detail) => detail.placeholder == selectedIcon
+    );
+    const index = details.findIndex(
+      (detail) => detail.placeholder === selectedIcon
+    );
+    changedIcon[0].defaultIconType = icon;
+    const newElements = [...details];
+    newElements[index] = changedIcon[0];
+    dispatch({
+      type: "ADD_DETAILS",
+      payload: newElements,
+    });
+    handleClose();
+  };
   return (
     <Grid container spacing={2}>
       <Grid item xs={4} style={{ margin: "auto" }}>
@@ -17,33 +68,121 @@ const DesignDetails = () => {
         <div className="flex -space-x-px w-100">
           <button
             style={{ width: "25%" }}
+            onClick={() => {
+              onChangeTextFillType(IconFillType.FULL_TEXT);
+            }}
             className="btn rounded-r-none border border-info font-medium text-info hover:bg-info hover:text-white focus:bg-info focus:text-white active:bg-info/90"
           >
             Phone
           </button>
           <button
             style={{ width: "25%" }}
+            onClick={() => {
+              onChangeTextFillType(IconFillType.FIRST_LETTER);
+            }}
             className="btn rounded-none border border-info font-medium text-info hover:bg-info hover:text-white focus:bg-info focus:text-white active:bg-info/90"
           >
             P
           </button>
           <button
             style={{ width: "25%" }}
+            onClick={() => {
+              onChangeTextFillType(IconFillType.ICON);
+            }}
             className="btn rounded-none border border-info font-medium text-info hover:bg-info hover:text-white focus:bg-info focus:text-white active:bg-info/90"
           >
             <CallOutlinedIcon fontSize={"small"} />
           </button>
           <button
             style={{ width: "25%" }}
+            onClick={() => {
+              onChangeTextFillType(IconFillType.NONE);
+            }}
             className="btn rounded-l-none border border-info font-medium text-info hover:bg-info hover:text-white focus:bg-info focus:text-white active:bg-info/90"
           >
             None
           </button>
         </div>
       </Grid>
+      <Grid item xs={4}>
+        <h5 className="text-white font-light">Labels icons</h5>
+      </Grid>
+      <Grid item xs={8} style={{ margin: "auto" }}>
+        <Grid container>
+          {details.length !== 0 &&
+            details.slice(3, details.length).map((t) => {
+              if (t.value !== "") {
+                return (
+                  <Grid container className={"mb-2"}>
+                    <Grid item xs={8} style={{ margin: "auto" }}>
+                      <h5 className="text-white font-light">{t.placeholder}</h5>
+                    </Grid>
+                    <Grid item xs={4} style={{ display: "grid" }}>
+                      <Button
+                        variant="outlined"
+                        onClick={(evt) => {
+                          handleClick(evt, t.placeholder);
+                        }}
+                        style={{
+                          color: "rgb(170, 187, 204)",
+                          borderColor: "rgb(170, 187, 204)",
+                        }}
+                        startIcon={t.defaultIconType}
+                        endIcon={<ExpandMoreIcon />}
+                      />
+                    </Grid>
+                  </Grid>
+                );
+              }
+            })}
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+            className={classes.detailsMenu}
+          >
+            {IconElements.map((icon) => {
+              if (icon.placeholder !== "Pronouns") {
+                return (
+                  <Grid container spacing={2} style={{ width: "300px" }}>
+                    <Grid item xs={5}>
+                      <Typography style={{ fontSize: 14, paddingLeft: 5 }}>
+                        {icon.placeholder}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={7}>
+                      <Grid container>
+                        {(icon.defaultIconTypeList as Array<any>) &&
+                          icon.defaultIconTypeList?.map(
+                            (iconEl: ReactNode | null) => {
+                              return (
+                                <Grid item xs={3}>
+                                  <IconButton
+                                    onClick={() => {
+                                      onChangeIcon(iconEl);
+                                    }}
+                                    size={"small"}
+                                  >
+                                    {iconEl}
+                                  </IconButton>
+                                </Grid>
+                              );
+                            }
+                          )}
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                );
+              }
+            })}
+          </Menu>
+        </Grid>
+      </Grid>
 
       <Grid item xs={4} style={{ margin: "auto" }}>
-        <h5 className="text-white font-light">Shape</h5>
+        <h5 className="text-white font-light">Direction</h5>
       </Grid>
       <Grid item xs={8} style={{ margin: "auto" }}>
         <div className="flex -space-x-px w-100">
@@ -94,9 +233,7 @@ const DesignDetails = () => {
       </Grid>
 
       <Grid item xs={4} style={{ margin: "auto" }}>
-        <h5 className="text-white font-light">
-          Match labels with template color
-        </h5>
+        <h5 className="text-white font-light">Text color</h5>
       </Grid>
       <Grid item xs={8} style={{ margin: "auto", textAlign: "center" }}>
         <button
@@ -138,7 +275,9 @@ const DesignDetails = () => {
       </Grid>
 
       <Grid item xs={4} style={{ margin: "auto" }}>
-        <h5 className="text-white font-light">Text color</h5>
+        <h5 className="text-white font-light">
+          Match labels with template color
+        </h5>
       </Grid>
       <Grid item xs={8} style={{ margin: "auto", textAlign: "left" }}>
         <div className="flex -space-x-px w-100">

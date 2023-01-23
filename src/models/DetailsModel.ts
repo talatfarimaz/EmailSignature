@@ -1,4 +1,5 @@
 import { ItemInterface } from "react-sortablejs";
+import { ReactElement, ReactNode } from "react";
 
 export interface DetailsModel extends ItemInterface {
   type: string;
@@ -11,7 +12,6 @@ export interface DetailsModel extends ItemInterface {
   editable: boolean;
   sortable: boolean;
   defaultElement: boolean;
+  defaultIconType: ReactNode | null;
+  defaultIconTypeList: ReactNode[] | null;
 }
-
-
-

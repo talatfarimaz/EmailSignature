@@ -29,6 +29,9 @@ const DesignTabStyle = makeStyles((theme) => ({
       fontWeight: "bold",
     },
   },
+  detailsMenu: {
+    paddingBottom: "200px",
+  },
 }));
 
 export default DesignTabStyle;

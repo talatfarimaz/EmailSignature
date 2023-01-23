@@ -4,6 +4,7 @@ import OpacityOutlinedIcon from "@material-ui/icons/OpacityOutlined";
 import { HexColorPicker } from "react-colorful";
 import { useDispatch } from "react-redux";
 import { CHANGE_LINE_SPACING_DETAIL } from "../../../../state/actionTypes";
+import { DetailsElements } from "../../../../constants/DetailsElements";
 
 const DesignFontAndColor = () => {
   const [openColorPicker, setOpenColorPicker] = React.useState<boolean>(false);

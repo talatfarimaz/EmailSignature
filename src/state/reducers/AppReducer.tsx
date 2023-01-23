@@ -1,7 +1,9 @@
 import * as actionTypes from "../actionTypes";
 import { ImageShapeType } from "../../constants/ImageShapeType";
-import { CHANGE_IMAGE_LOCATION, CHANGE_IMAGE_SIZE } from "../actionTypes";
 import { ImageLocationType } from "../../constants/ImageLocationType";
+import { IconFillType } from "../../constants/IconFillType";
+import { IconDirectionType } from "../../constants/IconDirectionType";
+import { SeparatorType } from "../../constants/SeparatorType";
 
 const INITIAL_APP_STATE = {
   title: "First Screen",
@@ -11,13 +13,17 @@ const INITIAL_APP_STATE = {
   detailsData: [],
   socialsData: [],
   photoData: null,
-  fontSizePer: 16,
+  fontSizePer: 14,
   lineSpacing: 2,
   spaceFromContent: 1,
   colorValue: "#9ca3af",
   imageShape: ImageShapeType.SQUARE,
   imageSize: 10,
   imageLocation: ImageLocationType.UP,
+  iconFillType: IconFillType.NONE,
+  iconDirection: IconDirectionType.HORIZONTAL,
+  separatorType: SeparatorType.NONE,
+  textColor: "#374151",
 };
 
 export default (state = INITIAL_APP_STATE, action: any) => {
@@ -50,7 +56,14 @@ export default (state = INITIAL_APP_STATE, action: any) => {
       return { ...state, imageSize: action.payload };
     case actionTypes.CHANGE_IMAGE_LOCATION:
       return { ...state, imageLocation: action.payload };
-
+    case actionTypes.CHANGE_FILL_TYPE:
+      return { ...state, iconFillType: action.payload };
+    case actionTypes.CHANGE_DIRECTION_TYPE:
+      return { ...state, iconDirection: action.payload };
+    case actionTypes.CHANGE_SEPARATOR_TYPE:
+      return { ...state, separatorType: action.payload };
+    case actionTypes.CHANGE_TEXT_COLOR:
+      return { ...state, textColor: action.payload };
     default:
       return state;
   }

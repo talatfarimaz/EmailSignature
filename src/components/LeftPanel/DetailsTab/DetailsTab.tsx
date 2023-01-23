@@ -34,6 +34,11 @@ const DetailsTab = () => {
     React.useState<boolean>(false);
   const [openEdit, setOpenEdit] = React.useState<boolean>(false);
   const [changedField, setChangedField] = React.useState<DetailsModel>({
+    chosen: false,
+    defaultIconType: null,
+    defaultIconTypeList: null,
+    filtered: false,
+    selected: false,
     value: "",
     clickable: false,
     deletable: true,
@@ -74,8 +79,8 @@ const DetailsTab = () => {
 
   useEffect(() => {
     /*
-                                            initializeSortableElements();
-                                        */
+                                                initializeSortableElements();
+                                            */
     dispatch({
       type: "ADD_DETAILS",
       payload: elements,
@@ -167,6 +172,8 @@ const DetailsTab = () => {
   const addCreatedField = () => {
     if (newFieldName !== "") {
       const newField: DetailsModel = {
+        defaultIconType: null,
+        defaultIconTypeList: null,
         id: "",
         deletable: true,
         name: newFieldName,
