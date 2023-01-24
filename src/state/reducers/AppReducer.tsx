@@ -4,6 +4,7 @@ import { ImageLocationType } from "../../constants/ImageLocationType";
 import { IconFillType } from "../../constants/IconFillType";
 import { IconDirectionType } from "../../constants/IconDirectionType";
 import { SeparatorType } from "../../constants/SeparatorType";
+import { CHANGE_LABEL_COLOR } from "../actionTypes";
 
 const INITIAL_APP_STATE = {
   title: "First Screen",
@@ -24,6 +25,7 @@ const INITIAL_APP_STATE = {
   iconDirection: IconDirectionType.HORIZONTAL,
   separatorType: SeparatorType.NONE,
   textColor: "#374151",
+  labelColorState: false,
 };
 
 export default (state = INITIAL_APP_STATE, action: any) => {
@@ -64,6 +66,9 @@ export default (state = INITIAL_APP_STATE, action: any) => {
       return { ...state, separatorType: action.payload };
     case actionTypes.CHANGE_TEXT_COLOR:
       return { ...state, textColor: action.payload };
+    case actionTypes.CHANGE_LABEL_COLOR:
+      return { ...state, labelColorState: action.payload };
+
     default:
       return state;
   }

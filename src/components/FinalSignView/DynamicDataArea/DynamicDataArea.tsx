@@ -11,9 +11,13 @@ import ImageIcon from "@material-ui/icons/Image";
 import DeleteIcon from "@material-ui/icons/Delete";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import SendIcon from "@material-ui/icons/Send";
+import StopIcon from "@material-ui/icons/Stop";
+import RemoveIcon from "@material-ui/icons/Remove";
 import { ImageShapeType } from "../../../constants/ImageShapeType";
 import { ImageLocationType } from "../../../constants/ImageLocationType";
 import { IconFillType } from "../../../constants/IconFillType";
+import { IconDirectionType } from "../../../constants/IconDirectionType";
+import { SeparatorType } from "../../../constants/SeparatorType";
 
 const DynamicDataArea = () => {
   const ava2 = require("../../../assets/ava2.png");
@@ -42,6 +46,18 @@ const DynamicDataArea = () => {
   // @ts-ignore
   const imageLocation = useSelector((state) => state.app.imageLocation);
 
+  // @ts-ignore
+  const iconDirection = useSelector((state) => state.app.iconDirection);
+
+  // @ts-ignore
+  const separatorType = useSelector((state) => state.app.separatorType);
+
+  // @ts-ignore
+  const textColor = useSelector((state) => state.app.textColor);
+
+  // @ts-ignore
+  const labelColorState = useSelector((state) => state.app.labelColorState);
+
   const classes = AddBookModalStyle();
 
   const ref = useRef();
@@ -62,7 +78,9 @@ const DynamicDataArea = () => {
                     child2.style.height = fontSizePer + "px";
                     child2.style.width = fontSizePer + "px";
                     child2.style.marginRight = "4px";
-                    child2.style.color = colorValue;
+                    child2.style.color = labelColorState
+                      ? colorValue
+                      : textColor;
                   }
                 }
               }
@@ -116,6 +134,52 @@ const DynamicDataArea = () => {
           {pronouns[0].value}
         </Typography>
       );
+    }
+  };
+
+  const getSeparator = () => {
+    if (separatorType === SeparatorType.LINE) {
+      return (
+        <Typography>
+          <RemoveIcon
+            style={{
+              transform: "rotate(90deg)",
+              color: textColor,
+              fontSize: fontSizePer + "px",
+              marginLeft: 2,
+              marginRight: -4,
+            }}
+          />
+        </Typography>
+      );
+    } else if (separatorType === SeparatorType.CIRCLE) {
+      return (
+        <Typography>
+          <FiberManualRecordIcon
+            style={{
+              color: textColor,
+              fontSize: fontSizePer + "px",
+              marginLeft: 2,
+              marginRight: -4,
+            }}
+          />
+        </Typography>
+      );
+    } else if (separatorType === SeparatorType.SQUARE) {
+      return (
+        <Typography>
+          <StopIcon
+            style={{
+              color: textColor,
+              fontSize: fontSizePer + "px",
+              marginLeft: 2,
+              marginRight: -4,
+            }}
+          />
+        </Typography>
+      );
+    } else {
+      return null;
     }
   };
 
@@ -223,15 +287,22 @@ const DynamicDataArea = () => {
             />
             <Grid
               item
-              xs={11}
+              xs={iconDirection === IconDirectionType.HORIZONTAL ? 11 : 1}
               style={{
                 paddingLeft: imageSize * 3 - 25 + "px",
               }}
             >
               <Grid container id="iconType">
                 {details.length !== 0 &&
-                  details.slice(3, details.length).map((t) => {
-                    if (t.name !== "Pronouns")
+                  details
+                    .slice(3, details.length)
+                    .filter(
+                      (detail) =>
+                        detail.value !== null &&
+                        detail.value !== "" &&
+                        detail.name !== "Pronouns"
+                    )
+                    .map((t, index) => {
                       return (
                         t.value !== null &&
                         t.value !== "" && (
@@ -242,7 +313,9 @@ const DynamicDataArea = () => {
                                 style={{
                                   lineHeight: "1.5rem",
                                   fontWeight: "600",
-                                  color: colorValue,
+                                  color: labelColorState
+                                    ? colorValue
+                                    : textColor,
                                   fontSize: fontSizePer + "px",
                                   marginRight: "5px",
                                 }}
@@ -262,17 +335,31 @@ const DynamicDataArea = () => {
                                 fontSize: fontSizePer + "px",
                                 lineHeight: "1.5rem",
                                 fontWeight: "bold",
+                                color: textColor,
                               }}
                             >
                               {t.value}
                             </Typography>
+                            {index !==
+                              details
+                                .slice(3, details.length)
+                                .filter(
+                                  (detail) =>
+                                    detail.value !== null &&
+                                    detail.value !== "" &&
+                                    detail.name !== "Pronouns"
+                                ).length -
+                                1 && getSeparator()}
                           </span>
                         )
                       );
-                  })}
+                    })}
               </Grid>
             </Grid>
-            <Grid item xs={1} />
+            <Grid
+              item
+              xs={iconDirection === IconDirectionType.HORIZONTAL ? 1 : 11}
+            />
             <Grid
               item
               xs={11}
