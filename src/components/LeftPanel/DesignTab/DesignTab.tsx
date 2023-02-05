@@ -3,6 +3,8 @@ import { Grid } from "@material-ui/core";
 import DesignFontAndColor from "./DesignFontAndColor/DesignFontAndColor";
 import DesignImages from "./DesignImages/DesignImages";
 import DesignDetails from "./DesignDetails/DesignDetails";
+import SocialIcons from "./SocialIcons/SocialIcons";
+import DecorativeLine from "./DecorativeLine/DecorativeLine";
 
 const DesignTab = () => {
   return (
@@ -14,6 +16,10 @@ const DesignTab = () => {
         <DesignImages />
         <h4 className="text-base text-white mt-3">Details</h4>
         <DesignDetails />
+        <h4 className="text-base text-white mt-3">Social icons</h4>
+        <SocialIcons />
+        <h4 className="text-base text-white mt-3">Decorative line</h4>
+        <DecorativeLine />
       </Grid>
     </Grid>
   );

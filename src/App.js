@@ -14,7 +14,7 @@ function App() {
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <div>
+        <div className={classes.mainDiv}>
           <Grid container spacing={2}>
             <Grid
               item
@@ -26,7 +26,14 @@ function App() {
             >
               <LeftPanelTab />
             </Grid>
-            <Grid item xl={9} lg={8} md={7} sm={12}>
+            <Grid
+              item
+              xl={9}
+              lg={8}
+              md={7}
+              sm={12}
+              className={classes.rightPanelMainGrid}
+            >
               <FinalSignView />
             </Grid>
           </Grid>

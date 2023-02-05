@@ -41,6 +41,9 @@ const DesignDetails = () => {
   // @ts-ignore
   const fillType: IconFillType = useSelector((state) => state.app.iconFillType);
 
+  // @ts-ignore
+  const labelColorState = useSelector((state) => state.app.labelColorState);
+
   const onChangeTextFillType = (type: number) => {
     dispatch({
       type: "CHANGE_FILL_TYPE",
@@ -88,6 +91,13 @@ const DesignDetails = () => {
   const onChangeLabelColor = (state: boolean) => {
     dispatch({
       type: "CHANGE_LABEL_COLOR",
+      payload: state,
+    });
+  };
+
+  const onChangeOptimizeMobile = (state: boolean) => {
+    dispatch({
+      type: "CHANGE_OPTIMIZE_MOBILE",
       payload: state,
     });
   };
@@ -372,6 +382,7 @@ const DesignDetails = () => {
                 <input
                   className="form-switch h-5 w-10 rounded-full bg-slate-300 before:rounded-full before:bg-slate-50 checked:!bg-success checked:before:bg-white dark:bg-navy-900 dark:before:bg-navy-300 dark:checked:before:bg-white"
                   type="checkbox"
+                  checked={labelColorState}
                   onChange={(evt) => {
                     onChangeLabelColor(evt.target.checked);
                   }}
@@ -394,6 +405,9 @@ const DesignDetails = () => {
             <input
               className="form-switch h-5 w-10 rounded-full bg-slate-300 before:rounded-full before:bg-slate-50 checked:!bg-success checked:before:bg-white dark:bg-navy-900 dark:before:bg-navy-300 dark:checked:before:bg-white"
               type="checkbox"
+              onChange={(evt) => {
+                onChangeOptimizeMobile(evt.target.checked);
+              }}
             />
           </label>
         </div>

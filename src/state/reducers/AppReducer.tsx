@@ -4,7 +4,10 @@ import { ImageLocationType } from "../../constants/ImageLocationType";
 import { IconFillType } from "../../constants/IconFillType";
 import { IconDirectionType } from "../../constants/IconDirectionType";
 import { SeparatorType } from "../../constants/SeparatorType";
-import { CHANGE_LABEL_COLOR } from "../actionTypes";
+import { LineType } from "../../constants/LineType";
+import { CHANGE_ICON_BORDER_TYPE, CHANGE_ICON_TYPE } from "../actionTypes";
+import { IconType } from "../../constants/IconType";
+import { IconBorderType } from "../../constants/IconBorderType";
 
 const INITIAL_APP_STATE = {
   title: "First Screen",
@@ -26,6 +29,14 @@ const INITIAL_APP_STATE = {
   separatorType: SeparatorType.NONE,
   textColor: "#374151",
   labelColorState: false,
+  lineType: LineType.NONE,
+  iconType: IconType.ORIGINAL,
+  iconBorder: IconBorderType.SQUARE,
+  iconSize: 10,
+  iconBetween: 11,
+  iconTemplateColor: false,
+  lineTemplateColor: false,
+  optimizeMobile: false,
 };
 
 export default (state = INITIAL_APP_STATE, action: any) => {
@@ -68,7 +79,22 @@ export default (state = INITIAL_APP_STATE, action: any) => {
       return { ...state, textColor: action.payload };
     case actionTypes.CHANGE_LABEL_COLOR:
       return { ...state, labelColorState: action.payload };
-
+    case actionTypes.CHANGE_LINE_TYPE:
+      return { ...state, lineType: action.payload };
+    case actionTypes.CHANGE_ICON_TYPE:
+      return { ...state, iconType: action.payload };
+    case actionTypes.CHANGE_ICON_BORDER_TYPE:
+      return { ...state, iconBorder: action.payload };
+    case actionTypes.CHANGE_ICON_SIZE:
+      return { ...state, iconSize: action.payload };
+    case actionTypes.CHANGE_ICON_BETWEEN:
+      return { ...state, iconBetween: action.payload };
+    case actionTypes.CHANGE_ICON_TEMPLATE_COLOR:
+      return { ...state, iconTemplateColor: action.payload };
+    case actionTypes.CHANGE_LINE_TEMPLATE_COLOR:
+      return { ...state, lineTemplateColor: action.payload };
+    case actionTypes.CHANGE_OPTIMIZE_MOBILE:
+      return { ...state, optimizeMobile: action.payload };
     default:
       return state;
   }
